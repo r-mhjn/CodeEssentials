@@ -13,7 +13,8 @@ import SignUpScreen from './screens/SignUpScreen';
 import EditScreen from './screens/EditScreen';
 import ResetPasswordScreen from './screens/ResetPasswordScreen';
 import SettingsScreen from './screens/SettingsScreen';
-
+import AddQuestionScreen from './screens/AddQuestionScreen';
+// import DiscussScreen from './screens/DiscussScreen';
 
 const reducer  = () => [];
 
@@ -29,9 +30,10 @@ const AppNavigatorStack  = createStackNavigator(
     SignUpScreen:{screen:SignUpScreen},
     ResetPasswordScreen:{screen:ResetPasswordScreen},
     EditScreen:{screen:EditScreen},
-    SettingsScreen:{screen:SettingsScreen},   
-
-   },
+    SettingsScreen:{screen:SettingsScreen},
+    AddQuestionScreen:{screen:AddQuestionScreen},
+    // DiscussScreen:{screen:DiscussScreen},
+    },
    {
       headerMode:"none",
       navigationOptions:{

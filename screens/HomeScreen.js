@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View , StyleSheet, TouchableOpacity, Dimensions,SafeAreaView} from 'react-native';
+import {Text, View , StyleSheet, TouchableOpacity, Dimensions,SafeAreaView, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import { Container,Header, Root, Content, Tab, Tabs, TabHeading, Button, Icon,Left, Right, Title,Body } from 'native-base';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import {AppLoading} from 'expo';
@@ -33,8 +33,6 @@ firebase.initializeApp(firebaseConfig);
 
 
 // Import screens here
-import Hey from '../components/Hey';
-
 import CoursesScreen from "./CoursesScreen";
 import DiscussScreen from './DiscussScreen';
 import ChallengesScreen from './ChallengesScreen';
@@ -46,27 +44,28 @@ export default class HomeScreen extends React.Component{
   
     constructor(props) {
         super(props);    
-        this.loadFont();
+        
         this.state = {
            isLoading:true,  
            isLoggedIn:false,        
            activePage:0,
         }
-        this.changeTab = this.changeTab.bind(this);
+        // this.changeTab = this.changeTab.bind(this);
     }    
 
-     changeTab =(i)=>{
-         this.setState({activePage:i})
-     }
+    // A method to handle tab changes
+    changeTab =(i)=>{
+        this.setState({activePage:i})
+    }
 
-    // initialPage={0} page={this.state.activePage} onChangeTab={({ i, ref, from }) => this.setState({activePage:i})}
-     loadFont = async ()=> {
-        await Font.loadAsync({
-          Roboto: require('../node_modules/native-base/Fonts/Roboto.ttf'),
-          Roboto_medium: require('../node_modules/native-base/Fonts/Roboto_medium.ttf')
-        });
-        this.setState({isLoading:false});
-      }
+   async componentWillMount(){
+    await Font.loadAsync({
+            Roboto: require('../node_modules/native-base/Fonts/Roboto.ttf'),
+            Roboto_medium: require('../node_modules/native-base/Fonts/Roboto_medium.ttf')
+          });
+          this.setState({isLoading:false});
+    }
+
 
     componentDidMount(){
         firebase.auth().onAuthStateChanged(authenticate =>{
@@ -89,6 +88,11 @@ export default class HomeScreen extends React.Component{
             )
         }
         return (
+         <TouchableWithoutFeedback
+         onPress={()=>{
+           Keyboard.dismiss();
+         }}
+         >
         <SafeAreaView style={GlobalStyles.AndroidSafeArea} >
         <Container>          
        
@@ -102,7 +106,7 @@ export default class HomeScreen extends React.Component{
           <Right>
             <Button transparent
             onPress={()=>{
-                this.props.navigation.navigate("ProfileScreen");
+                this.props.navigation.navigate("AddQuestionScreen");
             }}
             >
             <Icon name='refresh'/>
@@ -120,18 +124,19 @@ export default class HomeScreen extends React.Component{
         
         <Tabs initialPage={0}  onChangeTab={({i}) =>{ this.changeTab(i); console.log(this.state.activePage)}  } style={{height:Dimensions.get('window').height*0.80, backgroundColor:"#fff"}} tabBarUnderlineStyle={{borderBottomWidth:4, borderBottomColor:"#fff"}} >
         <Tab heading={ <TabHeading style={{backgroundColor:"#10A881"}}><Icon name="book" /></TabHeading>}>
-        <CoursesScreen />       
+        <CoursesScreen navigation={this.props.navigation}/>       
         </Tab>
         <Tab heading={ <TabHeading style={{backgroundColor:"#10A881"}}><Icon name="code" /></TabHeading>}>
-        <ChallengesScreen />
+        <ChallengesScreen  navigation={this.props.navigation}/>
         </Tab>
         <Tab heading={ <TabHeading style={{backgroundColor:"#10A881"}}><Icon name="chatboxes" /></TabHeading>}>
-        <DiscussScreen />
+        <DiscussScreen navigation={this.props.navigation}/>
         </Tab>
        </Tabs>    
 
       </Container>          
       </SafeAreaView>
+      </TouchableWithoutFeedback> 
 
     );
     }

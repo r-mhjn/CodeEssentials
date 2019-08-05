@@ -4,6 +4,7 @@ import {Form, Item, Input, Container, Header,Left,Right, Icon, Button,Body,Title
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 
 
+
 // Dimesions
 const screenWidth = Dimensions.get('window').width;
 const screenHeight  = Dimensions.get('window').height;
@@ -12,22 +13,36 @@ const screenHeight  = Dimensions.get('window').height;
 
 export default class CoursesScreen extends React.Component{
 
-    SampleFunction=()=>{ 
-        Alert.alert("Floating Button Clicked");   
+    constructor(props) {
+      super(props)
+    
+      this.state = {
+         
+      }
     }
-
+    componentDidMount(){
+      const {navigation} = this.props;
+      console.log("hey"+this.navigation);
+    }
+    
 
     render() {
         return (
           
         <TouchableWithoutFeedback 
-        onPress={()=>{
-            Keyboard.dismiss();
-        }}
-        >
-            <Container>
+          onPress={()=>{
+              Keyboard.dismiss();
+          }}
+          >
+          <Container>
             <View style={styles.container}>
-              <TouchableOpacity activeOpacity={0.5} onPress={this.SampleFunction} style={styles.TouchableOpacityStyle} >
+              <TouchableOpacity
+              onPress={()=>{
+                this.props.navigation.navigate("AddQuestionScreen");
+                
+              }}
+              activeOpacity={0.5}
+              style={styles.TouchableOpacityStyle} >
                 <Text name="add-circle" style={styles.FloatingButtonStyle}>+</Text>
              </TouchableOpacity>
             </View>

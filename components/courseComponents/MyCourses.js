@@ -11,6 +11,14 @@ const screenHeight  = Dimensions.get('window').height;
 
 export default class MyCourses extends React.Component{
 
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+             
+        }
+    }
+    
 
     render() {
         return (
@@ -20,7 +28,7 @@ export default class MyCourses extends React.Component{
                  <Text style={styles.componentHeading}>My Courses</Text> 
                  <TouchableOpacity
                  onPress={()=>{
-                        
+                    
                  }}
                  >
                     <Text style={styles.componentButton}>MANAGE</Text> 

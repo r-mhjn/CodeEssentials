@@ -52,11 +52,11 @@ export default class CoursesScreen extends React.Component{
                containerStyle={{backgroundColor: '#e2e1e0'}}
                inputStyle={{backgroundColor: '#e2e1e0', color:"#707070"}}
               />
-              <MyCourses />   
-              <WebDevelopment />
-              <ProgrammingLanguages />
-              <DevelopmentEssentials />
-              <DataScience />
+              <MyCourses navigation={this.props.navigation} />   
+              <WebDevelopment navigation={this.props.navigation} />
+              <ProgrammingLanguages navigation={this.props.navigation}/>
+              <DevelopmentEssentials navigation={this.props.navigation} />
+              <DataScience navigation={this.props.navigation} />
                 
             </Content>
             </Container>
