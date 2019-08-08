@@ -13,7 +13,6 @@ const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
 
-
 // Importing firebase
 import * as firebase from 'firebase';
 
@@ -120,8 +119,7 @@ export default class AddQuestionScreen extends React.Component{
                   style={styles.button}
                   >
                   <Text style={{fontSize:responsiveFontSize(2), fontWeight:"400", color:"#10A881"}}>POST</Text>
-                  </TouchableOpacity>  
-                   
+                  </TouchableOpacity>                    
                                    
 
               </View>

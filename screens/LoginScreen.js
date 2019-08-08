@@ -101,6 +101,7 @@ export default class LoginScreen extends React.Component{
     }    
     
     //TODO: Method to signInuser  
+    
     signInUser = (email, password) =>{
       firebase
           .auth()
@@ -249,7 +250,6 @@ export default class LoginScreen extends React.Component{
                 <Text style={styles.buttonTextSocial}>Google</Text>
                 </Button>
                 </View>
-
             
             
             </View>
