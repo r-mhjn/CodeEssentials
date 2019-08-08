@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+// TODO: gonna have to add the question id to the user ...to give out the courses by the user
 const UserSchema = new Schema(
   {
     username: {

@@ -27,6 +27,10 @@ const QuestionSchema = new Schema(
         user: {
           type: Schema.Types.ObjectId,
           ref: "myUser"
+        },
+        date: {
+          type: Date,
+          default: Date.now
         }
       }
     ],
@@ -42,13 +46,18 @@ const QuestionSchema = new Schema(
           required: true
         },
         name: {
-          type: String
+          type: String,
+          required: true
         },
-        love: [
+        likes: [
           {
             user: {
               type: Schema.Types.ObjectId,
               ref: "myUser"
+            },
+            date: {
+              type: Date,
+              default: Date.now
             }
           }
         ],
