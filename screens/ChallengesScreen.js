@@ -58,8 +58,13 @@ export default class CoursesScreen extends React.Component{
         data={this.state.dataSource}
         keyExtractor={this._keyExtractor}
         renderItem={( {item }) =>(
-          <TouchableOpacity>
-          <Card>
+          <TouchableOpacity
+          onPress={()=>{
+            this.props.navigation.navigate("DisplayChallengeScreen");
+          }}
+          style={{ padding: 0 }}
+          >
+          <Card style={{padding:0}}>
              <CardItem>
                <View style={styles.questionContainer}>
                   <Image

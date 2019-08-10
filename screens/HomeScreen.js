@@ -49,8 +49,7 @@ export default class HomeScreen extends React.Component{
            isLoading:true,  
            isLoggedIn:false,        
            activePage:0,
-        }
-        // this.changeTab = this.changeTab.bind(this);
+        }      
     }    
 
     // A method to handle tab changes
@@ -106,7 +105,7 @@ export default class HomeScreen extends React.Component{
           <Right>
             <Button transparent
             onPress={()=>{
-                this.props.navigation.navigate("AddQuestionScreen");
+                this.props.navigation.navigate("DisplayChallengeScreen");
             }}
             >
             <Icon name='refresh'/>
