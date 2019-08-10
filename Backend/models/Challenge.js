@@ -10,8 +10,41 @@ const ChallengeSchema = new Schema(
     challengeStatement: {
       type: String,
       required: true
-    }
+    },
+    comments: [
+      {
+        user: {
+          type: Schema.Types.ObjectId,
+          ref: "myUser"
+        },
+        text: {
+          type: String,
+          required: true
+        },
+        name: {
+          type: String,
+          required: true
+        },
+        likes: [
+          {
+            user: {
+              type: Schema.Types.ObjectId,
+              ref: "myUser"
+            },
+            date: {
+              type: Date,
+              default: Date.now
+            }
+          }
+        ],
+        date: {
+          type: Date,
+          default: Date.now
+        }
+      }
+    ]
   },
+
   {
     timestamps: true
   }

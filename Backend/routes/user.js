@@ -95,7 +95,7 @@ router.post("/login", (req, res) => {
                 email: user.email,
                 username: user.name
               };
-              jsonwt.sign(payload, myKey, { expiresIn: "1h" }, (err, token) => {
+              jsonwt.sign(payload, myKey, { expiresIn: "3h" }, (err, token) => {
                 if (err) {
                   throw err;
                 } else {

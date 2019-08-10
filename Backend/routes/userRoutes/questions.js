@@ -107,7 +107,7 @@ router.delete("/:questionId/:commentId", (req, res) => {
 // @type     POST
 // @route    /user/question/:questionId
 // @desc     route upvote/downvote a question
-// @access   PRIVATE     // TODO: Need to test this route with multiple logged in users
+// @access   PRIVATE     
 
 router.post("/upvote/:questionId", (req, res) => {
   Question.findById(req.params.questionId)
@@ -146,11 +146,11 @@ router.post("/upvote/:questionId", (req, res) => {
 
 //TODO: Add a route to like a comment on a question
 // @type     POST
-// @route    /user/question/:questionId/:commentId
+// @route    /user/questions/comment/like/:questionId/:commentId
 // @desc     route like a comment
-// @access   PRIVATE     //TODO: This route is to be tested for multiple users
+// @access   PRIVATE     
 
-router.post("/like/:questionId/:commentId", (req, res) => {
+router.post("/comment/like/:questionId/:commentId", (req, res) => {
   Question.findById(req.params.questionId)
     .then(question => {
       let index = -1;
