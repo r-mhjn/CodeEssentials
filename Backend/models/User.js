@@ -9,8 +9,27 @@ const UserSchema = new Schema(
     },
     email: {
       type: String,
-      required: true,      
+      required: true
     },
+    mycourses: [
+      {
+        courseId: {
+          type: String,
+          required: true
+        },
+        courseName: {
+          type: String,
+          required: true
+        },
+        adddedOn: {
+          type: Date,
+          date: Date.now()
+        },
+        completedOn: {
+          type: Date
+        }
+      }
+    ],
     password: {
       type: String,
       required: true
