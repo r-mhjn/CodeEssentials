@@ -17,7 +17,7 @@ import MyCourses from '../components/courseComponents/MyCourses';
 import WebDevelopment from '../components/courseComponents/WebDevelopment';
 import ProgrammingLanguages from '../components/courseComponents/ProgrammingLanguages';
 import DataScience from '../components/courseComponents/DataScience';
-import DevelopmentEssentials from '../components/courseComponents/DevelopmentEssentials';
+import Databases from '../components/courseComponents/Databases';
 
 
 export default class CoursesScreen extends React.Component{
@@ -55,7 +55,7 @@ export default class CoursesScreen extends React.Component{
               <MyCourses navigation={this.props.navigation} />   
               <WebDevelopment navigation={this.props.navigation} />
               <ProgrammingLanguages navigation={this.props.navigation}/>
-              <DevelopmentEssentials navigation={this.props.navigation} />
+              <Databases navigation={this.props.navigation} />
               <DataScience navigation={this.props.navigation} />
                 
             </Content>
