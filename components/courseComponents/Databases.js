@@ -17,7 +17,7 @@ export default class MyCourses extends React.Component{
             <Container style={styles.container}>
              <Content >
                <View style={styles.componentTop}>
-                 <Text style={styles.componentHeading}>Development Essentials</Text> 
+                 <Text style={styles.componentHeading}>Databases</Text> 
                  <TouchableOpacity
                  onPress={()=>{
                         
