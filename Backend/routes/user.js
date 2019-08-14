@@ -6,9 +6,10 @@ const router = express.Router();
 const myKey = process.env.SECRET;
 
 // Importing routes
-const profileRouter = require('./userRoutes/profile');
-const challengeRouter = require('./userRoutes/challenges');
-const questionRouter = require('./userRoutes/questions');
+const profileRouter = require("./userRoutes/profile");
+const challengeRouter = require("./userRoutes/challenges");
+const questionRouter = require("./userRoutes/questions");
+// const courseRouter = require("./userRoutes/courses");
 
 // adding on the the strategy
 require("../strategies/userAuth")(passport);
@@ -99,9 +100,11 @@ router.post("/login", (req, res) => {
                 if (err) {
                   throw err;
                 } else {
+                  // console.log(payload);
                   return res.json({
                     sucess: true,
-                    token: "Bearer " + token
+                    token: "Bearer " + token,
+                    user: user
                   });
                 }
               });
@@ -117,41 +120,26 @@ router.post("/login", (req, res) => {
     .catch(err => console.log(err));
 });
 
-// router.post("/login", (req, res, next) => {
-//     console.log(req.body);
-//   passport.authenticate(
-//     "login-strategy",
-//     {
-//       session: false
-//     },
-//     (err, user, info) => {
-//       if (err) {
-//         return res.status(400).json(err);
-//       }
-//       if (user) {
-//         const payload = {
-//           id: user.id,
-//           name: user.name,
-//           email: user.email,
-//           username: user.name
-//         };
-//         jsonwt.sign(payload, myKey, { expiresIn: "1h" }, (err, token) => {
-//           if (err) {
-//             throw err;
-//           } else {
-//             return res.json({
-//               sucess: true,
-//               token: "Bearer " + token
-//             });
-//           }
-//         });
-//       }
-//     }
-//   )(req, res, next);
-// });
+router.use(
+  "/profile",
+  passport.authenticate("user", { session: false }),
+  profileRouter
+);
+router.use(
+  "/challenges",
+  passport.authenticate("user", { session: false }),
+  challengeRouter
+);
+router.use(
+  "/questions",
+  passport.authenticate("user", { session: false }),
+  questionRouter
+);
 
-router.use('/profile',passport.authenticate("jwt", { session: false }),profileRouter);
-router.use('/challenges',passport.authenticate("jwt", { session: false }),challengeRouter);
-router.use('/questions',passport.authenticate("jwt", { session: false }),questionRouter);
+// router.use(
+//   "/course",
+//   passport.authenticate("jwt", { session: false }),
+//   courseRouter
+// );
 
 module.exports = router;
