@@ -3,36 +3,32 @@ const Schema = mongoose.Schema;
 
 const CourseSchema = new Schema(
   {
-    domain: [
+    domain: {
+      type: String,
+      required: true
+    },
+    courseName: {
+      type: String,
+      required: true
+    },
+    description: {
+      type: String,
+      required: true
+    },
+    topics: [
       {
-        domainName: {
+        topicName: {
           type: String,
           required: true
         },
-        courses: [
-          {
-            name: {
-              type: String,
-              required: true
-            },
-            topics: [
-              {
-                topicName: {
-                  type: String,
-                  required: true
-                },
-                topicDescription: {
-                  type: String,
-                  required: true
-                },
-                addedOn: {
-                  type: Date,
-                  date: Date.now()
-                }
-              }
-            ]
-          }
-        ]
+        topicDescription: {
+          type: String,
+          required: true
+        },
+        addedOn: {
+          type: Date,
+          date: Date.now()
+        }
       }
     ]
   },
@@ -42,3 +38,4 @@ const CourseSchema = new Schema(
 );
 
 module.exports = Course = mongoose.model("myCourse", CourseSchema);
+
