@@ -136,10 +136,10 @@ router.use(
   questionRouter
 );
 
-// router.use(
-//   "/course",
-//   passport.authenticate("jwt", { session: false }),
-//   courseRouter
-// );
+router.use(
+  "/course",
+  passport.authenticate("jwt", { session: false }),
+  courseRouter
+);
 
 module.exports = router;
