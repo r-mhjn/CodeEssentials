@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, View , StyleSheet, TouchableOpacity, Dimensions, Keyboard, TouchableWithoutFeedback} from 'react-native';
 import {Form, Item, Input, Container, Header,Left,Right, Icon, Button,Body,Title,Content} from 'native-base';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import Axios from 'axios';
 
 
 // Dimesions
@@ -17,6 +18,11 @@ export default class MyCourses extends React.Component{
         this.state = {
              
         }
+    }
+
+    componentDidMount(){
+        // this._getCourses();
+        
     }
     
 

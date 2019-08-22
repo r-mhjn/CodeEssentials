@@ -25,7 +25,8 @@ router.post("/", (req, res) => {
   console.log(req.body);
   const newChallenge = new Challenge({
     title: req.body.title,
-    challengeStatement: req.body.statement
+    challengeStatement: req.body.statement,
+    // challengePic:require('../../src/images/challengePics/code.png')
   });
 
   newChallenge

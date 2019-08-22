@@ -26,12 +26,12 @@ router.get("/", (req, res) => {
 router.put("/resetpassword/:userId", (req, res) => {
   let oldPassword = req.body.oldPassword;
   let newPassword = req.body.newPassword;
-  console.log(oldPassword, newPassword);
+  console.log(oldPassword, newPassword, req.user.password);
   User.findById(req.params.userId)
     .then(user => {
-      console.log(user.password);
+      console.log(req.user.password);
       bcrypt
-        .compare(oldPassword, user.password)
+        .compare(oldPassword, req.user.password)
         .then(isCorrect => {
           if (isCorrect) {
             bcrypt.genSalt(10, (err, salt) => {
@@ -73,6 +73,7 @@ router.put("/resetpassword/:userId", (req, res) => {
 
 router.put("/update/:userId", (req, res) => {
   let profilepic = req.body.profilepic;
+  // console.log(typeof profilepic);
   let username = req.body.username;
   let phoneno = req.body.phoneno;
   let hasChanged = false;
@@ -81,7 +82,8 @@ router.put("/update/:userId", (req, res) => {
     .then(user => {
       // res.json(user)
       if (user.profilepic != profilepic) {
-        user.profilepic = profilepic;
+        if(profilepic!=''){
+        user.profilepic = profilepic;}
         hasChanged = true;
       }
       if (user.username != username) {
