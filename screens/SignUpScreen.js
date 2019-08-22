@@ -27,6 +27,8 @@ import {
 import { responsiveFontSize } from "react-native-responsive-dimensions";
 import validator from "validator";
 import { AsyncStorage } from "react-native";
+const ip = require("../ipAddress");
+var jwtdecode = require("jwt-decode");
 
 // Dimesions
 const screenWidth = Dimensions.get("window").width;
@@ -35,8 +37,6 @@ const screenHeight = Dimensions.get("window").height;
 //importing styles
 import GlobalStyles from "../src/GlobalStyles";
 
-// Importing firebase
-import * as firebase from "firebase";
 import Axios from "axios";
 
 export default class SignUpScreen extends React.Component {
@@ -55,8 +55,9 @@ export default class SignUpScreen extends React.Component {
   }
 
   signUpUser = async (username, email, password, phoneno) => {
+    // TODO: test this method to ensure the template string works
     console.log("hey");
-    await Axios.post("http://192.168.1.65:5000/user/register", {
+    await Axios.post(`http://${ip.default}:5000/user/register`, {
       username: username,
       email: email,
       password: password,
@@ -79,6 +80,7 @@ export default class SignUpScreen extends React.Component {
       .then(response => {
         console.log(response.data);
         this._storeToken(response.data.token);
+        this._storeUser(response.data);
         this.props.navigation.replace("HomeScreen");
       })
       .catch(error => {
@@ -86,8 +88,32 @@ export default class SignUpScreen extends React.Component {
       });
   };
 
-  _storeToken = token => {
+  _storeUser = async user => {
     try {
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+    } catch (error) {
+      console.log("Error while saving user " + error);
+    }
+  };
+
+  _saveLoginTime = async token => {
+    let tokenStrings = jwtdecode(token);
+
+    console.log("TOKEN_-", tokenStrings.exp);
+    try {
+      await AsyncStorage.setItem(
+        "tokenExpireTime",
+        tokenStrings.exp.toString()
+      );
+    } catch (error) {
+      console.log("Error while saving Exp time " + error);
+    }
+  };
+
+  _storeToken = token => {
+    // TODO: make this method async
+    try {
+      this._saveLoginTime(token);
       AsyncStorage.setItem("jwtToken", token);
     } catch (error) {
       console.log("Error while saving token" + error);
@@ -129,7 +155,6 @@ export default class SignUpScreen extends React.Component {
   //A method to compare both passwords
   validateConfirmPassword = () => {
     if (validator.equals(this.state.password, this.state.confirmPassword)) {
-      // add a method to set up the firebase sign up and profile and redirect to login screen
       this.signUpUser(
         this.state.username,
         this.state.email,

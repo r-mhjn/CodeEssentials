@@ -31,6 +31,7 @@ import { responsiveFontSize } from "react-native-responsive-dimensions";
 import Axios from "axios";
 const ip = require("../ipAddress");
 import { AsyncStorage } from "react-native";
+var jwtdecode = require("jwt-decode");
 
 // Dimesions
 const screenWidth = Dimensions.get("window").width;
@@ -38,9 +39,6 @@ const screenHeight = Dimensions.get("window").height;
 
 //importing styles
 import GlobalStyles from "../src/GlobalStyles";
-
-// Importing firebase
-import * as firebase from "firebase";
 
 export default class LoginScreen extends React.Component {
   // TODO: add a method for forgot passoword
@@ -60,43 +58,57 @@ export default class LoginScreen extends React.Component {
     };
   }
 
-  componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user != null) {
-        console.log(user);
-      }
-    });
-  }
-
   //Using Jwt strategy for signin
   signInUser = (email, password) => {
-    // console.log("hey");
-    Axios.post("http://192.168.1.65:5000/user/login", {
+    console.log(ip.default);
+    Axios.post(`http://${ip.default}:5000/user/login`, {
       email: email,
       password: password
     })
       .then(response => {
         console.log(response.data);
         this._storeToken(response.data.token);
-        this.props.navigation.replace("HomeScreen");
+        this._storeUser(response.data);
+        // this._saveLoginTime();
+        // this.props.navigation.pop(1);
+        this.props.navigation.replace('HomeScreen');    // TODO: Minor bug that it flashes the profilenotloggedInScreen b4 getting to HomeScreen
       })
       .catch(error => {
-        console.log(error);
+        console.log("login Error"+ error);
       });
   };
 
-  _storeToken = async (token) => {
+  _saveLoginTime = async token => {
+    let tokenStrings = jwtdecode(token);
+
+    console.log("TOKEN_-", tokenStrings.exp);
     try {
-      await AsyncStorage.setItem('jwtToken', token);
+      await AsyncStorage.setItem("tokenExpireTime", tokenStrings.exp.toString());
     } catch (error) {
-       console.log("Error while saving token")
+      console.log("Error while saving Exp time " + error);
+    }      
+  };
+
+  _storeUser = async user => {
+    try {
+      await AsyncStorage.setItem("user", JSON.stringify(user));
+    } catch (error) {
+      console.log("Error while saving user " + error);
+    }
+  };
+
+  _storeToken = async token => {
+    try {
+      this._saveLoginTime(token);
+      await AsyncStorage.setItem("jwtToken", token);
+    } catch (error) {
+      console.log("Error while saving token " + error);
     }
   };
 
   // TODO: Write a method to ensure all field
   ensureAllFields = () => {
     if (this.state.email !== "" && this.state.password !== "") {
-      // add the firebase code to authenticate and redirect
       return true;
     } else {
       return false;

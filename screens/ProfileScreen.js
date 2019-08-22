@@ -29,8 +29,6 @@ import {
 } from "native-base";
 import { responsiveFontSize } from "react-native-responsive-dimensions";
 import { AsyncStorage } from "react-native";
-// importing firebase
-import * as firebase from "firebase";
 
 // Dimesions
 const screenWidth = Dimensions.get("window").width;
@@ -48,33 +46,33 @@ export default class ProfileScreen extends React.Component {
     this.state = {
       username: "",
       email: "",
-      phoneno: ""
+      phoneno: "",
+      user: {}
     };
   }
-
-  async componentDidMount() {
-    let user = await firebase.auth().currentUser;
-
-    //TODO: adding a promise to it
-    if (user != null) {
-      console.log(user);
-      user.providerData.forEach(profile => {
-        this.setState({
-          username: user.displayName,
-          phoneno: user.phoneNumber,
-          email: user.email
-        });
-      });
-    }
+  componentDidMount() {
+    this._getUser();
   }
-  
+
+  _getUser = async () => {
+    let myuser = await this.props.navigation.getParam("user");
+    this.setState({ user: myuser });
+    console.log("hey this is my user   " + this.state.user.username);
+  };
+
   signOut = async () => {
+    await AsyncStorage.removeItem("tokenExpireTime")
+      .then(res => {
+        console.log("token exp time removed");
+      })
+      .catch(err => console.log("Error while removing token exp time " + err));
+
     await AsyncStorage.removeItem("jwtToken")
       .then(res => {
-         console.log("signed out");
-        this.props.navigation.replace("HomeScreen");
+        console.log("signed out");
+        this.props.navigation.replace("ProfileScreenNotLogged");
       })
-      .catch(err => console.log("Error while signout"));
+      .catch(err => console.log("Error while signout " + err));
   };
 
   render() {
@@ -118,7 +116,7 @@ export default class ProfileScreen extends React.Component {
                     marginTop: screenHeight * 0.04
                   }}
                 >
-                  {this.state.username}
+                  {this.state.user.username}
                 </Text>
                 <Text
                   style={{
@@ -128,7 +126,7 @@ export default class ProfileScreen extends React.Component {
                     marginVertical: 4
                   }}
                 >
-                  {this.state.email}
+                  {this.state.user.email}
                 </Text>
                 <Text
                   style={{
@@ -138,7 +136,7 @@ export default class ProfileScreen extends React.Component {
                     marginBottom: screenHeight * 0.05
                   }}
                 >
-                  {this.state.phoneno}
+                  {this.state.user.phoneno}
                 </Text>
               </Right>
             </Item>
@@ -171,7 +169,9 @@ export default class ProfileScreen extends React.Component {
                 <Right>
                   <TouchableOpacity
                     onPress={() => {
-                      this.props.navigation.navigate("EditScreen");
+                      this.props.navigation.navigate("EditProfileScreen", {
+                        user: this.state.user
+                      });
                     }}
                   >
                     <Icon name="arrow-forward" style={{ color: "#fff" }} />
@@ -191,7 +191,6 @@ export default class ProfileScreen extends React.Component {
                 <Right>
                   <TouchableOpacity
                     onPress={() => {
-                      var user = firebase.auth().currentUser;
                       this.props.navigation.navigate("ResetPasswordScreen");
                     }}
                   >

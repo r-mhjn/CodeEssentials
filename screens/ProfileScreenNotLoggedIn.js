@@ -27,15 +27,7 @@ export default class ProfileScreen extends React.Component{
             <SafeAreaView style={GlobalStyles.AndroidSafeArea}>
             <Container>
             <Header style={styles.headerStyle}>
-              <Left style={{flex:1}}>
-                <Button transparent
-                onPress={()=>{
-                    this.props.navigation.goBack();
-                }}
-                >
-                  <Icon name='arrow-back' />
-                </Button>
-              </Left>
+              
               <Body style={{flex:1}}>                
               </Body>  
               <Right style={{flex:1}}/>
