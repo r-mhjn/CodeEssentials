@@ -9,11 +9,13 @@ import ProfileScreen from "./screens/ProfileScreen";
 import ProfileScreenNotLoggedIn from "./screens/ProfileScreenNotLoggedIn";
 import LoginScreen from "./screens/LoginScreen";
 import SignUpScreen from "./screens/SignUpScreen";
-import EditScreen from "./screens/EditScreen";
+import EditProfileScreen from "./screens/EditProfileScreen";
 import ResetPasswordScreen from "./screens/ResetPasswordScreen";
 import SettingsScreen from "./screens/SettingsScreen";
 import AddQuestionScreen from "./screens/AddQuestionScreen";
 import DisplayChallengeScreen from "./screens/DisplayChallengeScreen";
+import ChallengeCommentScreen from "./screens/ChallengeCommentScreen";
+import CourseListScreen from "./screens/CourseListScreen";
 
 const reducer = () => [];
 
@@ -27,10 +29,12 @@ const AppNavigatorStack = createStackNavigator(
     LoginScreen: { screen: LoginScreen },
     SignUpScreen: { screen: SignUpScreen },
     ResetPasswordScreen: { screen: ResetPasswordScreen },
-    EditScreen: { screen: EditScreen },
+    EditProfileScreen: { screen: EditProfileScreen },
     SettingsScreen: { screen: SettingsScreen },
     AddQuestionScreen: { screen: AddQuestionScreen },
-    DisplayChallengeScreen: { screen: DisplayChallengeScreen }
+    DisplayChallengeScreen: { screen: DisplayChallengeScreen },
+    ChallengeCommentScreen: { screen: ChallengeCommentScreen },
+    CourseListScreen: { screen: CourseListScreen }
   },
   {
     headerMode: "none",
