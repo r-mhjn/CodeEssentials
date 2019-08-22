@@ -11,6 +11,10 @@ const ChallengeSchema = new Schema(
       type: String,
       required: true
     },
+    challengePic:{
+       type:String,
+      //  required:true,  
+    },
     comments: [
       {
         user: {
