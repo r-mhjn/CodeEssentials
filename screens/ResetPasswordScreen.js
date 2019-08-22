@@ -3,7 +3,10 @@ import {Text, View , StyleSheet,Image, Dimensions, SafeAreaView, TouchableOpacit
 import {Form, Item, Input, Label,Container, Header,Left,Right, Icon, Button, List, ListItem, InputGroup, Body,Title, Content, CheckBox} from 'native-base';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import validator from 'validator';
+import Axios from 'axios';
+import {AsyncStorage} from 'react-native';
 
+const ip = require('../ipAddress');
 
 // Dimesions
 const screenWidth = Dimensions.get('window').width;
@@ -11,9 +14,6 @@ const screenHeight  = Dimensions.get('window').height;
 
 //importing styles
 import GlobalStyles  from '../src/GlobalStyles';
-
-// Importing firebase
-import * as firebase from 'firebase'; 
 
 
 export default class ResetPasswordScreen extends React.Component{
@@ -32,10 +32,44 @@ export default class ResetPasswordScreen extends React.Component{
              secureFieldThree:true,
              oldPassword:'',
              newPassword:'',
-             confirmNewPassoword:'',
+             confirmNewPassword:'',
+             token:'',
         }
-    }
     
+    }
+    async componentDidMount() {
+        await AsyncStorage.getItem("jwtToken")
+          .then(token=>{
+              if(token !==null)
+              {
+                this.setState({token:token});
+                console.log(token);
+              }
+          })
+          .catch(err => console.log("Error getting token "+ err));
+      }
+
+    
+    // TODO: a function for reset password
+    resetPassword = () =>{   // TODO: not working req failed with status code 404
+        let headers = {
+            'Content-Type': 'application/json',
+            'Authorization': this.state.token,
+        };
+        console.log(headers);
+        if(this.state.newPassword == this.state.confirmNewPassword){
+        console.log(ip.default);
+        console.log(this.state.token);
+        Axios.put(`http://${ip.default}:5000/user/profile/resetpassword/5d4adeba2d0d9b621a89466c`,
+        {oldPassword: this.state.oldPassword ,newPassword: this.state.newPassword},
+        {headers:headers},
+        )
+        .then(res=> console.log(res))
+        .catch(err => console.log("Error while posting to reset route "+err));
+      }else{
+        //   Alert.alert();
+      }
+    }
 
 
     render() {
@@ -73,8 +107,8 @@ export default class ResetPasswordScreen extends React.Component{
                 <Input
                 autoCorrect={false}
                 autoCapitalize="none"                
-                onChangeText={()=>{
-                  
+                onChangeText={(oldPassword)=>{
+                   this.setState({oldPassword});
                 }}   
                 placeholder='Old password' placeholderTextColor="#10A881" style={{ color: "#10A881" }} secureTextEntry={this.state.secureFieldOne}/>
                 <Right>
@@ -96,8 +130,8 @@ export default class ResetPasswordScreen extends React.Component{
                 <Input
                 autoCorrect={false}
                 autoCapitalize="none"               
-                onChangeText={()=>{
-                  
+                onChangeText={(newPassword)=>{
+                    this.setState({newPassword})
                 }}   
                 placeholder='New password' placeholderTextColor="#10A881" style={{ color: "#10A881" }} secureTextEntry={this.state.secureFieldTwo}/>
                 <Right>
@@ -118,8 +152,8 @@ export default class ResetPasswordScreen extends React.Component{
                 <Input
                 autoCorrect={false}
                 autoCapitalize="none"               
-                onChangeText={()=>{
-                  
+                onChangeText={(confirmNewPassword)=>{
+                   this.setState({confirmNewPassword})
                 }}   
                 placeholder='Confirm password' placeholderTextColor="#10A881" style={{ color: "#10A881" }} secureTextEntry={this.state.secureFieldThree}/>
                
@@ -138,7 +172,8 @@ export default class ResetPasswordScreen extends React.Component{
 
             <Button 
                 onPress={()=>{
-                    this.props.navigation.navigate('LoginScreen');
+                     this.resetPassword();
+                    // this.props.navigation.navigate('LoginScreen');
                 }}
                 style={styles.button}
                 >
