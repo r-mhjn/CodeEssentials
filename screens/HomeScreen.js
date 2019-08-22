@@ -27,7 +27,7 @@ import {
 import { responsiveFontSize } from "react-native-responsive-dimensions";
 import { AppLoading } from "expo";
 import * as Font from "expo-font";
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from "react-native";
 
 // Importing style
 import GlobalStyles from "../src/GlobalStyles";
@@ -36,26 +36,11 @@ import GlobalStyles from "../src/GlobalStyles";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
-// Importing firebase
-import * as firebase from "firebase";
-
-var firebaseConfig = {
-  apiKey: "AIzaSyBNGa0_zXPwGd21JZpSmoG__98KOZkTci4",
-  authDomain: "codeessentials-9e43e.firebaseapp.com",
-  databaseURL: "https://codeessentials-9e43e.firebaseio.com",
-  projectId: "codeessentials-9e43e",
-  storageBucket: "",
-  messagingSenderId: "117423343662",
-  appId: "1:117423343662:web:d6952b6cb3a6faa2"
-};
-
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
 // Import screens here
 import CoursesScreen from "./CoursesScreen";
 import DiscussScreen from "./DiscussScreen";
 import ChallengesScreen from "./ChallengesScreen";
+import ProfileScreenNotLoggedIn from "./ProfileScreenNotLoggedIn";
 
 export default class HomeScreen extends React.Component {
   constructor(props) {
@@ -64,14 +49,12 @@ export default class HomeScreen extends React.Component {
     this.state = {
       isLoading: true,
       isLoggedIn: false,
-      activePage: 0
+      activePage: 0,
+      isTokenExpired: false,
+      user: {},
+      tokenExpTime: '',
     };
   }
-
-  // A method to handle tab changes
-  changeTab = i => {
-    this.setState({ activePage: i });
-  };
 
   async componentWillMount() {
     await Font.loadAsync({
@@ -81,34 +64,81 @@ export default class HomeScreen extends React.Component {
     this.setState({ isLoading: false });
   }
 
-  // componentDidMount(){
-  //     firebase.auth().onAuthStateChanged(authenticate =>{
-  //         if(authenticate){
-  //             this.setState({isLoggedIn:true});
-  //             console.log(this.state.isLoggedIn);
-  //         } else{
-  //           this.setState({isLoggedIn:false});
-  //           console.log(this.state.isLoggedIn);
-  //         }
-  //     })
-  // }
-  async componentDidMount() {
-    await AsyncStorage.getItem("jwtToken")
-      .then(token=>{
-          if(token !==null)
-          {
-            this.setState({isLoggedIn:true});
-            console.log(token);
-          }else{
-            this.setState({isLoggedIn:false});
-          }
-      })
-      .catch(err => console.log("Error getting token"));
+  componentDidMount() {
+    // this._getTokenExpireTime();
+    this._checkTokenExpTime();
+    // if(tokenCheck)
+    // {
+      //   console.log(tokenCheck)
+      //   this.setState({isLoggedIn:false});
+      // }
+      this._getToken();
+    this._getUser();
   }
+
+  _checkTokenExpTime = async () => {
+    let tokenExpTime = await AsyncStorage.getItem("tokenExpireTime");
+    // console.log("token time" + tokenExpTime);
+    // console.log(typeof tokenExpTime);
+    this.setState({ tokenExpTime: tokenExpTime });
+    console.log("token time" + this.state.tokenExpTime);
+   
+    // console.log("wassup");
+    // console.log(typeof this.state.tokenExpTime );
+    console.log(Date.now() ,parseInt(this.state.tokenExpTime));
+    if (Date.now() >= parseInt(this.state.tokenExpTime*1000)) {
+      console.log(false);
+     await this.setState({ isTokenExpired: false });
+      console.log(this.state.isTokenExpired);
+    } else {
+      console.log(true);
+    await this.setState({ isTokenExpired: true });
+    }
+  };
+
+
+  _getUser = async () => {
+    await AsyncStorage.getItem("user")
+      .then(userdata => {
+        if (userdata !== null) {
+          let man = JSON.parse(userdata);
+          let myuser = man.user;
+          // console.log(myuser.email);
+
+          this.setState({ user: myuser });
+        }
+      })
+      .catch(err => console.log("Error getting user " + err));
+  };
+
+  _getToken = async () => {
+    console.log("hey");
+    await AsyncStorage.getItem("jwtToken")
+      .then(token => {
+        if (token !== null) {
+          this.setState({ isLoggedIn: true });
+          console.log("hey token " + token);
+        } else {
+          this.setState({ isLoggedIn: false });
+        }
+      })
+      .catch(err => console.log("Error getting token " + err));
+  };
+
+  // A method to handle tab changes
+  changeTab = i => {
+    this.setState({ activePage: i });
+  };
 
   render() {
     if (this.state.isLoading) {
       return <AppLoading />;
+    } else if (this.state.isLoggedIn == false) {
+      return <ProfileScreenNotLoggedIn navigation={this.props.navigation} />;
+    }
+    else if(this.state.isTokenExpired == false)
+    {
+      return <ProfileScreenNotLoggedIn navigation={this.props.navigation} />;
     }
     return (
       <TouchableWithoutFeedback
@@ -143,11 +173,12 @@ export default class HomeScreen extends React.Component {
                 <Button
                   transparent
                   onPress={() => {
-                    this.props.navigation.navigate(
-                      this.state.isLoggedIn
-                        ? "ProfileScreen"
-                        : "ProfileScreenNotLogged"
-                    );
+                    this.props.navigation.navigate("ProfileScreen", {
+                      user: this.state.user
+                    });
+
+                    // console.log("hey my user "+ this.state.user);
+                    // this.props.navigation.navigate("ProfileScreen", {user: this.state.user})
                   }}
                 >
                   <Icon name="person" />
