@@ -9,7 +9,7 @@ const myKey = process.env.SECRET;
 const profileRouter = require("./userRoutes/profile");
 const challengeRouter = require("./userRoutes/challenges");
 const questionRouter = require("./userRoutes/questions");
-// const courseRouter = require("./userRoutes/courses");
+const courseRouter = require("./userRoutes/courses");
 
 // adding on the the strategy
 require("../strategies/userAuth")(passport);
@@ -96,7 +96,7 @@ router.post("/login", (req, res) => {
                 email: user.email,
                 username: user.name
               };
-              jsonwt.sign(payload, myKey, { expiresIn: "3h" }, (err, token) => {
+              jsonwt.sign(payload, myKey, { expiresIn: '365d' }, (err, token) => {
                 if (err) {
                   throw err;
                 } else {
@@ -138,7 +138,7 @@ router.use(
 
 router.use(
   "/course",
-  passport.authenticate("jwt", { session: false }),
+  passport.authenticate("user", { session: false }),
   courseRouter
 );
 
