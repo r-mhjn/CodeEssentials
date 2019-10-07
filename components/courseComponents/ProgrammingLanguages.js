@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
     marginTop: screenHeight * 0.015,
     marginLeft: screenWidth * 0.03,
     fontSize: responsiveFontSize(2),
-    fontWeight: "400"
+    fontWeight: "400",
+    fontFamily: 'monospace',
     //    borderColor:"black",
     //    borderWidth:2,
   },
@@ -135,6 +136,7 @@ const styles = StyleSheet.create({
     marginRight: screenWidth * 0.03,
     fontSize: responsiveFontSize(1.6),
     fontWeight: "400",
-    color: "#10A881"
+    color: "#10A881",
+    fontFamily: 'monospace',
   }
 });

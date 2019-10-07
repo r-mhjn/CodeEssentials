@@ -159,7 +159,7 @@ export default class LoginScreen extends React.Component {
                         }}
                         placeholder="Enter email"
                         placeholderTextColor="#fff"
-                        style={{ color: "#fff" }}
+                        style={{ color: "#fff",fontFamily: 'monospace', }}
                       />
                     </Item>
 
@@ -173,7 +173,7 @@ export default class LoginScreen extends React.Component {
                         }}
                         placeholder="Enter password"
                         placeholderTextColor="#fff"
-                        style={{ color: "#fff" }}
+                        style={{ color: "#fff",fontFamily: 'monospace', }}
                         secureTextEntry={this.state.secureFieldOne}
                       />
                       <Right>
@@ -203,7 +203,8 @@ export default class LoginScreen extends React.Component {
                         color: "#fff",
                         maxWidth: screenWidth * 0.33,
                         marginTop: 3,
-                        marginLeft: screenWidth * 0.57
+                        marginLeft: screenWidth * 0.57,
+                        fontFamily: 'monospace',
                       }}
                     >
                       Forgot Password?
@@ -237,7 +238,8 @@ export default class LoginScreen extends React.Component {
                         color: "#fff",
                         maxWidth: screenWidth * 0.6,
                         marginTop: 3,
-                        marginHorizontal: screenWidth * 0.15
+                        marginHorizontal: screenWidth * 0.15,
+                        fontFamily: 'monospace',
                       }}
                     >
                       Not a Member yet? Sign Up here.
@@ -287,7 +289,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#10A881"
   },
   headerStyle: {
-    backgroundColor: "#10A881"
+    backgroundColor: "#10A881",
+    fontFamily: 'monospace',
   },
   headingTextContainer: {
     marginTop: screenHeight * 0.1,
@@ -302,7 +305,8 @@ const styles = StyleSheet.create({
   headingText: {
     fontSize: responsiveFontSize(4),
     color: "#fff",
-    fontWeight: "500"
+    fontWeight: "500",
+    fontFamily: 'monospace',
   },
   inputContainer: {
     // borderColor:"black",
@@ -326,7 +330,8 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#10A881",
-    fontSize: responsiveFontSize(2)
+    fontSize: responsiveFontSize(2),
+    fontFamily: 'monospace',
   },
   socialButtonContainer: {
     flexDirection: "row"
@@ -345,7 +350,8 @@ const styles = StyleSheet.create({
   buttonTextSocial: {
     color: "#10A881",
     fontSize: responsiveFontSize(2),
-    marginRight: screenWidth * 0.1
+    marginRight: screenWidth * 0.1,
+    fontFamily: 'monospace',
   },
   rememberMeContainer: {
     flexDirection: "row",

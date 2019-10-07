@@ -112,6 +112,7 @@ export default class ProfileScreen extends React.Component {
                   style={{
                     color: "#10A881",
                     fontSize: responsiveFontSize(1.8),
+                    fontFamily: 'monospace',
                     marginLeft: screenWidth * 0.025,
                     marginTop: screenHeight * 0.04
                   }}
@@ -121,7 +122,8 @@ export default class ProfileScreen extends React.Component {
                 <Text
                   style={{
                     color: "#10A881",
-                    fontSize: responsiveFontSize(1.8),
+                    fontSize: responsiveFontSize(1.6),
+                    fontFamily: 'monospace',
                     marginLeft: screenWidth * 0.025,
                     marginVertical: 4
                   }}
@@ -132,6 +134,7 @@ export default class ProfileScreen extends React.Component {
                   style={{
                     color: "#10A881",
                     fontSize: responsiveFontSize(1.8),
+                    fontFamily: 'monospace',
                     marginLeft: screenWidth * 0.025,
                     marginBottom: screenHeight * 0.05
                   }}
@@ -151,7 +154,7 @@ export default class ProfileScreen extends React.Component {
                 }}
               >
                 <Text
-                  style={{ fontSize: responsiveFontSize(4), color: "#fff" }}
+                  style={{ fontSize: responsiveFontSize(4), color: "#fff",fontFamily: 'monospace', }}
                 >
                   Preference
                 </Text>
@@ -161,7 +164,7 @@ export default class ProfileScreen extends React.Component {
               >
                 <Left>
                   <Text
-                    style={{ color: "#fff", fontSize: responsiveFontSize(2) }}
+                    style={{ color: "#fff", fontSize: responsiveFontSize(2),fontFamily: 'monospace', }}
                   >
                     Edit
                   </Text>
@@ -183,7 +186,7 @@ export default class ProfileScreen extends React.Component {
               >
                 <Left>
                   <Text
-                    style={{ color: "#fff", fontSize: responsiveFontSize(2) }}
+                    style={{ color: "#fff", fontSize: responsiveFontSize(2),fontFamily: 'monospace', }}
                   >
                     Reset Password
                   </Text>
@@ -203,7 +206,7 @@ export default class ProfileScreen extends React.Component {
               >
                 <Left>
                   <Text
-                    style={{ color: "#fff", fontSize: responsiveFontSize(2) }}
+                    style={{ color: "#fff", fontSize: responsiveFontSize(2),fontFamily: 'monospace', }}
                   >
                     Settings
                   </Text>
@@ -241,7 +244,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#10A881"
   },
   headerStyle: {
-    backgroundColor: "#10A881"
+    backgroundColor: "#10A881",
+    fontFamily: 'monospace',
   },
   detailsContainer: {
     flex: 1,
@@ -281,6 +285,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#E44236",
-    fontSize: responsiveFontSize(2)
+    fontSize: responsiveFontSize(2),
+    fontFamily: 'monospace',
   }
 });
