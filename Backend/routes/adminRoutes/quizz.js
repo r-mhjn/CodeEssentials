@@ -1,8 +1,27 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer');
+const path = require('path');
 
 // Importing schemas
 const Quizz = require('../../models/Quizz');
+
+// multer settings
+var fname;
+const storage = multer.diskStorage({
+	destination: function(req, file, cb) {
+		cb(null, 'public/quizpics');
+	},
+	filename: function(req, file, callback) {
+		callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+		fname = file.fieldname + '-' + Date.now() + path.extname(file.originalname);
+	},
+});
+
+var upload = multer({
+	// this function has alot more attributes which can help to put limits such as file size etc
+	storage: storage,
+});
 
 // @type      GET
 // @route    /admin/quizz/
@@ -22,16 +41,51 @@ router.get('/', (req, res) => {
 // @desc     route to create topic for quizz
 // @access   Private
 
-router.post('/createtopic', (req, res) => {
-	const newQuizz = new Quizz({
-		topicName: req.body.topicName,
-	});
-	newQuizz
-		.save()
-		.then(quizz => {
-			res.json(quizz);
-		})
-		.catch(err => console.log('Error while saving new quizz topic to database' + err));
+router.post('/createtopic', upload.single('quizimage'), (req, res) => {
+	if (!req.file) {
+		console.log('No file received');
+		res.send({
+			success: false,
+		});
+	} else {
+		const newQuizz = new Quizz({
+			topicName: req.body.topicName,
+			quizImage: fname,
+		});
+		newQuizz
+			.save()
+			.then(quizz => {
+				res.json(quizz);
+			})
+			.catch(err => console.log('Error while saving new quizz topic to database' + err));
+	}
+});
+
+// @type     PUT
+// @route    /admin/quizz/createtopic
+// @desc     route to UPDATE a quizz topic
+// @access   Private
+
+router.put('/createtopic', upload.single('quizimage'), (req, res) => {
+	if (!req.file) {
+		console.log('No file received');
+		res.send({
+			success: false,
+		});
+	} else {
+		Quizz.findOne({ topicName: req.body.topicName })
+			.then(topic => {
+				topic.topicName = req.body.topicName;
+				topic.quizImage = fname;
+				topic
+					.save()
+					.then(topic => {
+						res.json(topic);
+					})
+					.catch(err => console.log('Error while saving the topic to database after update ' + err));
+			})
+			.catch(err => console.log('Error while finding the topic to update ' + err));
+	}
 });
 
 // @type     Delete
