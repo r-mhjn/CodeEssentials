@@ -15,6 +15,10 @@ const CourseSchema = new Schema(
       type: String,
       required: true
     },
+    courseImage:{
+      type:String,
+      required: true,
+    },
     topics: [
       {
         topicName: {

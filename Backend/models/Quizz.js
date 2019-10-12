@@ -7,6 +7,10 @@ const QuizzSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		quizImage: {
+			type: String,
+			required: true,
+		},
 		questions: [
 			{
 				options: [],
