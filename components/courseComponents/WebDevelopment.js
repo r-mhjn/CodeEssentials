@@ -1,6 +1,30 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Dimensions, Keyboard, TouchableWithoutFeedback } from 'react-native';
-import { Form, Item, Input, Container, Header, Left, Right, Icon, Button, Body, Title, Content } from 'native-base';
+import {
+	Text,
+	View,
+	StyleSheet,
+	TouchableOpacity,
+	Dimensions,
+	Image,
+	Keyboard,
+	TouchableWithoutFeedback,
+	ScrollView,
+} from 'react-native';
+import {
+	Form,
+	Item,
+	Input,
+	Container,
+	Header,
+	Left,
+	Right,
+	Icon,
+	Button,
+	Body,
+	Title,
+	Content,
+	Spinner,
+} from 'native-base';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Axios from 'axios';
 import { AsyncStorage } from 'react-native';
@@ -17,6 +41,8 @@ export default class MyCourses extends React.Component {
 		this.state = {
 			token: '',
 			courses: [],
+			modalVisible: false,
+			isLoading: true,
 		};
 	}
 
@@ -42,13 +68,18 @@ export default class MyCourses extends React.Component {
 			headers: headers,
 		})
 			.then(res => {
-				this.setState({ courses: res.data });
+				this.setState({ courses: res.data, isLoading: false });
 				// console.log(this.state.courses);
 			})
 			.catch(err => console.log('Error while getting web courses route ' + err));
 	};
 
 	render() {
+		// if (this.state.isLoading) {
+		// 	return (
+
+		// 	);
+		// }
 		return (
 			<Container style={styles.container}>
 				<Content>
@@ -65,6 +96,39 @@ export default class MyCourses extends React.Component {
 							<Text style={styles.componentButton}>VIEW MORE</Text>
 						</TouchableOpacity>
 					</View>
+
+					<ScrollView>
+						<View style={styles.componentMainDisplay}>
+							{this.state.courses.map((item, index) => {
+								if (index <= 3) {
+									return (
+										<TouchableOpacity
+											key={index}
+											onPress={() => {
+												this.props.navigation.navigate('CourseTopicListScreen', {
+													topics: item.topics,
+													courseName: item.courseName,
+												});
+											}}
+										>
+											<View style={styles.smallCourseViewContainer}>
+												<Image
+													borderWidth={0}
+													style={styles.image}
+													source={{
+														uri: `http://${ip.default}:5000/coursepics/${item.courseImage}`,
+													}}
+												/>
+												<Text style={styles.smallCourseViewContainerText}>
+													{item.courseName.toUpperCase()}
+												</Text>
+											</View>
+										</TouchableOpacity>
+									);
+								}
+							})}
+						</View>
+					</ScrollView>
 				</Content>
 			</Container>
 		);
@@ -80,7 +144,7 @@ const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		marginHorizontal: screenWidth * 0.02,
 		borderWidth: 1,
-		borderRadius: 2,
+		borderRadius: 10,
 		borderColor: '#ddd',
 		// borderBottomWidth: 1,
 		shadowColor: '#000',
@@ -115,5 +179,40 @@ const styles = StyleSheet.create({
 		fontWeight: '400',
 		color: '#10A881',
 		fontFamily: 'monospace',
+	},
+	componentMainDisplay: {
+		// borderWidth: 2,
+		// borderColor: 'black',
+		width: screenWidth * 0.9,
+		backgroundColor: '#fff',
+		marginHorizontal: screenWidth * 0.025,
+		height: screenHeight * 0.19,
+		flexDirection: 'row',
+	},
+	smallCourseViewContainer: {
+		flexDirection: 'column',
+		marginTop: screenHeight * 0.03,
+	},
+	smallCourseViewContainerText: {
+		marginTop: screenHeight * 0.005,
+		marginRight: screenWidth * 0.045,
+		fontSize: responsiveFontSize(1.2),
+	},
+	image: {
+		width: screenWidth * 0.19,
+		height: screenWidth * 0.19,
+		marginRight: screenWidth * 0.045,
+		borderRadius: 10,
+		// borderColor: '#fff',
+	},
+	spinnerText: {
+		justifyContent: 'center',
+		alignItems: 'center',
+		fontFamily: 'monospace',
+	},
+	progress: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
 	},
 });
