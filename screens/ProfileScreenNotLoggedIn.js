@@ -30,7 +30,7 @@ export default class ProfileScreen extends React.Component {
 
 					<View style={styles.contentContainer}>
 						<View style={styles.textContainer}>
-							<Text style={styles.headingText}>Sign in to continue</Text>
+							<Text style={styles.headingText}>SIGN IN TO CONTINUE</Text>
 							<Text style={styles.text}>Sign in to your account to continue access.</Text>
 							<Button
 								onPress={() => {
@@ -66,10 +66,10 @@ const styles = StyleSheet.create({
 	headingText: {
 		color: '#47535E',
 		marginVertical: 10,
-		minWidth: screenWidth * 0.6,
-		maxWidth: screenWidth * 0.6,
-		marginLeft: screenWidth * 0.25,
-		marginRight: screenWidth * 0.25,
+		minWidth: screenWidth * 0.7,
+		maxWidth: screenWidth * 0.7,
+		marginLeft: screenWidth * 0.15,
+		marginRight: screenWidth * 0.15,
 		fontSize: responsiveFontSize(2.5),
 		fontFamily: 'monospace',
 	},
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
 		marginVertical: 20,
 		alignItems: 'center',
 		justifyContent: 'center',
+		borderRadius: 10,
 	},
 	buttonText: {
 		color: '#fff',

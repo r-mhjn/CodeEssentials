@@ -213,7 +213,7 @@ export default class SignUpScreen extends React.Component {
 												placeholder="Username"
 												maxLength={15}
 												placeholderTextColor="#fff"
-												style={{ color: '#fff', fontFamily: 'monospace' }}
+												style={styles.inputText}
 											/>
 										</Item>
 
@@ -228,7 +228,7 @@ export default class SignUpScreen extends React.Component {
 												}}
 												placeholder="Enter email"
 												placeholderTextColor="#fff"
-												style={{ color: '#fff', fontFamily: 'monospace' }}
+												style={styles.inputText}
 											/>
 										</Item>
 
@@ -243,7 +243,7 @@ export default class SignUpScreen extends React.Component {
 												maxLength={10}
 												placeholder="Enter phone number"
 												placeholderTextColor="#fff"
-												style={{ color: '#fff', fontFamily: 'monospace' }}
+												style={styles.inputText}
 											/>
 										</Item>
 
@@ -257,7 +257,7 @@ export default class SignUpScreen extends React.Component {
 												}}
 												placeholder="Enter password"
 												placeholderTextColor="#fff"
-												style={{ color: '#fff', fontFamily: 'monospace' }}
+												style={styles.inputText}
 												secureTextEntry={true}
 											/>
 										</Item>
@@ -272,7 +272,7 @@ export default class SignUpScreen extends React.Component {
 												}}
 												placeholder="Confirm password"
 												placeholderTextColor="#fff"
-												style={{ color: '#fff', fontFamily: 'monospace' }}
+												style={styles.inputText}
 												secureTextEntry={true}
 											/>
 										</Item>
@@ -352,11 +352,17 @@ const styles = StyleSheet.create({
 		marginVertical: 20,
 		alignItems: 'center',
 		justifyContent: 'center',
+		borderRadius: 10,
 	},
 	buttonText: {
 		color: '#10A881',
 		fontSize: responsiveFontSize(2),
 		fontWeight: '200',
 		fontFamily: 'monospace',
+	},
+	inputText: {
+		color: '#fff',
+		fontFamily: 'monospace',
+		fontSize: responsiveFontSize(1.8),
 	},
 });

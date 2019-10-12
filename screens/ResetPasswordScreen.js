@@ -116,73 +116,69 @@ export default class ResetPasswordScreen extends React.Component {
 									</Button>
 								</Left>
 								<Body style={{ flex: 2 }}>
-									<Title style={{ textAlign: 'center', fontFamily: 'monospace' }}>
-										Reset Password
-									</Title>
+									<Title style={{ textAlign: 'left', fontFamily: 'monospace' }}>RESET PASSWORD</Title>
 								</Body>
 								<Right style={{ flex: 1 }} />
 							</Header>
 
 							<View style={styles.contentContainer}>
-								<Form>
-									<Item style={styles.itemStyle}>
-										<Icon active name="key" style={{ color: '#10A881', fontFamily: 'monospace' }} />
-										<Input
-											autoCorrect={false}
-											autoCapitalize="none"
-											onChangeText={oldPassword => {
-												this.setState({ oldPassword });
+								<Item style={styles.itemStyle}>
+									<Icon active name="key" style={{ color: '#10A881' }} />
+									<Input
+										autoCorrect={false}
+										autoCapitalize="none"
+										onChangeText={oldPassword => {
+											this.setState({ oldPassword });
+										}}
+										placeholder="Old password"
+										placeholderTextColor="#10A881"
+										style={styles.placeholderStyles}
+										secureTextEntry={this.state.secureFieldOne}
+									/>
+									<Right>
+										<TouchableOpacity
+											onPress={() => {
+												let secureFieldOne = this.state.secureFieldOne;
+												this.setState({ secureFieldOne: !secureFieldOne });
 											}}
-											placeholder="Old password"
-											placeholderTextColor="#10A881"
-											style={{ color: '#10A881' }}
-											secureTextEntry={this.state.secureFieldOne}
-										/>
-										<Right>
-											<TouchableOpacity
-												onPress={() => {
-													let secureFieldOne = this.state.secureFieldOne;
-													this.setState({ secureFieldOne: !secureFieldOne });
-												}}
-											>
-												<Icon
-													active
-													name={(icon = this.state.secureFieldOne ? 'eye-off' : 'eye')}
-													style={{ color: '#10A881', marginRight: 10 }}
-												/>
-											</TouchableOpacity>
-										</Right>
-									</Item>
+										>
+											<Icon
+												active
+												name={(icon = this.state.secureFieldOne ? 'eye-off' : 'eye')}
+												style={{ color: '#10A881', marginRight: 10 }}
+											/>
+										</TouchableOpacity>
+									</Right>
+								</Item>
 
-									<Item style={styles.itemStyle}>
-										<Icon active name="key" style={{ color: '#10A881', fontFamily: 'monospace' }} />
-										<Input
-											autoCorrect={false}
-											autoCapitalize="none"
-											onChangeText={newPassword => {
-												this.setState({ newPassword });
+								<Item style={styles.itemStyle}>
+									<Icon active name="key" style={{ color: '#10A881', fontFamily: 'monospace' }} />
+									<Input
+										autoCorrect={false}
+										autoCapitalize="none"
+										onChangeText={newPassword => {
+											this.setState({ newPassword });
+										}}
+										placeholder="New password"
+										placeholderTextColor="#10A881"
+										style={styles.placeholderStyles}
+										secureTextEntry={this.state.secureFieldTwo}
+									/>
+									<Right>
+										<TouchableOpacity
+											onPress={() => {
+												let secureFieldTwo = this.state.secureFieldTwo;
+												this.setState({ secureFieldTwo: !secureFieldTwo });
 											}}
-											placeholder="New password"
-											placeholderTextColor="#10A881"
-											style={{ color: '#10A881' }}
-											secureTextEntry={this.state.secureFieldTwo}
-										/>
-										<Right>
-											<TouchableOpacity
-												onPress={() => {
-													let secureFieldTwo = this.state.secureFieldTwo;
-													this.setState({ secureFieldTwo: !secureFieldTwo });
-												}}
-											>
-												<Icon
-													active
-													name={(icon = this.state.secureFieldTwo ? 'eye-off' : 'eye')}
-													style={{ color: '#10A881', marginRight: 10 }}
-												/>
-											</TouchableOpacity>
-										</Right>
-									</Item>
-								</Form>
+										>
+											<Icon
+												active
+												name={(icon = this.state.secureFieldTwo ? 'eye-off' : 'eye')}
+												style={{ color: '#10A881', marginRight: 10 }}
+											/>
+										</TouchableOpacity>
+									</Right>
+								</Item>
 
 								<Item style={styles.itemStyle}>
 									<Icon active name="key" style={{ color: '#10A881' }} />
@@ -194,7 +190,7 @@ export default class ResetPasswordScreen extends React.Component {
 										}}
 										placeholder="Confirm password"
 										placeholderTextColor="#10A881"
-										style={{ color: '#10A881', fontFamily: 'monospace' }}
+										style={styles.placeholderStyles}
 										secureTextEntry={this.state.secureFieldThree}
 									/>
 
@@ -239,6 +235,7 @@ const styles = StyleSheet.create({
 	},
 	headerStyle: {
 		backgroundColor: '#10A881',
+		fontSize: responsiveFontSize(1),
 		fontFamily: 'monospace',
 	},
 	contentContainer: {
@@ -265,11 +262,17 @@ const styles = StyleSheet.create({
 		marginVertical: 20,
 		alignItems: 'center',
 		justifyContent: 'center',
+		borderRadius: 10,
 	},
 	buttonText: {
 		color: '#fff',
 		fontSize: responsiveFontSize(2),
 		fontWeight: '200',
 		fontFamily: 'monospace',
+	},
+	placeholderStyles: {
+		color: '#10A881',
+		fontFamily: 'monospace',
+		fontSize: responsiveFontSize(1.6),
 	},
 });

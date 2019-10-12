@@ -105,10 +105,16 @@ export default class QuizzListScreen extends React.Component {
 				<FlatList
 					data={this.state.quizzes}
 					keyExtractor={this._keyExtractor}
-					style={{ padding: 0, margin: 0 }}
+					style={{ padding: 0, margin: 0, marginHorizontal: screenWidth * 0.01 }}
 					renderItem={({ item }) => (
-						<Card style={{ padding: 0, margin: 0 }}>
-							<CardItem style={{ padding: 0, margin: 0, height: 70 }}>
+						<Card style={{ padding: 0, margin: 0, borderRadius: 10 }}>
+							<CardItem style={{ padding: 0, margin: 0, height: 80, borderRadius: 100 }}>
+								<Image
+									style={styles.image}
+									source={{
+										uri: `http://${ip.default}:5000/quizpics/${item.quizImage}`,
+									}}
+								/>
 								<View style={styles.quizzTopicContainer}>
 									<Text style={styles.topicName}> {item.topicName.toUpperCase()} </Text>
 									<Text
@@ -116,7 +122,7 @@ export default class QuizzListScreen extends React.Component {
 											fontSize: responsiveFontSize(1.5),
 											color: '#A0A0A0',
 											fontFamily: 'monospace',
-											marginLeft:screenWidth*0.05,
+											marginLeft: screenWidth * 0.03,
 										}}
 									>
 										Questions: {item.questions.length}
@@ -156,6 +162,7 @@ export default class QuizzListScreen extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: '#F5F5F5',
 	},
 	spinnerText: {
 		justifyContent: 'center',
@@ -163,16 +170,25 @@ const styles = StyleSheet.create({
 		fontFamily: 'monospace',
 	},
 	topicName: {
-		fontSize: responsiveFontSize(2.5),
+		fontSize: responsiveFontSize(2.2),
 		fontFamily: 'monospace',
 	},
 	quizzTopicContainer: {
 		flex: 1,
 		flexDirection: 'column',
+		width: screenWidth * 0.68,
 	},
 	progress: {
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+	image: {
+		width: screenWidth * 0.12,
+		height: screenWidth * 0.12,
+		marginRight: screenWidth * 0.045,
+		borderRadius: 10,
+		borderWidth: 2,
+		// borderColor: '#f2f2f2',
 	},
 });

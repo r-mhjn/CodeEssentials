@@ -142,7 +142,7 @@ export default class HomeScreen extends React.Component {
 				}}
 			>
 				<SafeAreaView style={GlobalStyles.AndroidSafeArea}>
-					<Container style={{backgroundColor:"#F8F8F8"}}>
+					<Container style={{backgroundColor: '#F8F8F8', }}>
 						<Header hasText hasTabs style={styles.headerStyle}>
 							<Body>
 								<Title style={{ marginLeft: 10, fontFamily: 'monospace' }}>
@@ -251,6 +251,7 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
+		backgroundColor: '#F5F5F5',
 	},
 	headerStyle: {
 		backgroundColor: '#10A881',

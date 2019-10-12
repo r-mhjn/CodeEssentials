@@ -133,7 +133,7 @@ export default class EditProfileScreen extends React.Component {
 								</Button>
 							</Left>
 							<Body style={{ flex: 1 }}>
-								<Title style={{ textAlign: 'center', fontFamily: 'monospace' }}>Edit</Title>
+								<Title style={{ textAlign: 'center', fontFamily: 'monospace' }}>EDIT</Title>
 							</Body>
 							<Right style={{ flex: 2.8 }} />
 						</Header>
@@ -248,6 +248,7 @@ const styles = StyleSheet.create({
 		marginVertical: 20,
 		alignItems: 'center',
 		justifyContent: 'center',
+		borderRadius: 10,
 	},
 	buttonText: {
 		color: '#fff',
