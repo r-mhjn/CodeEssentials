@@ -15,6 +15,7 @@ import {
 	Body,
 	Title,
 	Content,
+	Picker,
 	Spinner,
 } from 'native-base';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
@@ -28,7 +29,7 @@ const screenHeight = Dimensions.get('window').height;
 const ip = require('../ipAddress');
 
 export default class ChallengesScreen extends React.Component {
-	//TODO: need to make a change in schema to add the question pic
+	//TODO: need to make a change in schema to add the challenge pic
 	constructor(props) {
 		super(props);
 
@@ -36,6 +37,7 @@ export default class ChallengesScreen extends React.Component {
 			isLoading: true,
 			dataSource: [],
 			token: '',
+			selected: '',
 		};
 	}
 
@@ -68,6 +70,13 @@ export default class ChallengesScreen extends React.Component {
 
 	_keyExtractor = (datasource, index) => datasource._id;
 
+	onValueChange(value) {
+		//TODO: add a method with switch case what will filter the flatlist data based upon user selection
+		this.setState({
+			selected: value,
+		});
+	}
+
 	render() {
 		if (this.state.isLoading) {
 			return (
@@ -79,29 +88,59 @@ export default class ChallengesScreen extends React.Component {
 		}
 		return (
 			<View style={styles.container}>
+				<Form style={styles.pickerForm}>
+					<Item picker style={{ borderColor: 'transparent' }}>
+						<Picker
+							mode="dropdown"
+							iosIcon={<Icon name="arrow-down" />}
+							style={styles.pickerStyle}
+							placeholder={this.state.selected}
+							placeholderStyle={{ color: '#B0B0B0' }}
+							placeholderIconColor="#B0B0B0"
+							selectedValue={this.state.selected}
+							onValueChange={this.onValueChange.bind(this)}
+							// itemStyle={{ backgroundColor: 'lightgrey', marginLeft: 0, paddingLeft: 15 }}
+							itemTextStyle={{ fontSize: responsiveFontSize(2), color: 'white' }}
+						>
+							<Picker.Item label="SOLVED" value="SOLVED" style={styles.pickerItem} />
+							<Picker.Item label="UNSOLVED" value="UNSOLVED" style={styles.pickerItem} />
+							<Picker.Item label="EASY" value="EASY" style={styles.pickerItem} />
+							<Picker.Item label="MEDIUM" value="MEDIUM" style={styles.pickerItem} />
+							<Picker.Item label="HARD" value="HARD" style={styles.pickerItem} />
+						</Picker>
+					</Item>
+				</Form>
 				<FlatList
 					data={this.state.dataSource}
 					keyExtractor={this._keyExtractor}
-					style={{ padding: 0, margin: 0 }}
+					style={styles.flatList}
 					renderItem={({ item }) => (
 						<TouchableOpacity
 							onPress={() => {
 								this.props.navigation.navigate('DisplayChallengeScreen', { challenge: item });
 							}}
-							style={{ padding: 0, margin: 0 }}
+							style={{ padding: 0, margin: 0, borderRadius: 10 }}
 						>
-							<Card style={{ padding: 0, margin: 0 }}>
-								<CardItem style={{ padding: 0, margin: 0 }}>
-									<View style={styles.questionContainer}>
-										<Image
-											style={styles.questionpic}
-											source={{
-												uri:
-													'https://www.google.com/search?tbm=isch&q=images&chips=q:images,g_1:background:6GJxHg1gMNk%3D&usg=AI4_-kSL79ctnvYywkrsKDDuYBCWjjN6RQ&sa=X&ved=0ahUKEwict5TpsIzkAhUT3o8KHbyIAN4Q4lYILSgB&biw=1843&bih=912&dpr=1#imgrc=R2_t7nzjZXGyEM:',
+							<Card
+								style={{
+									padding: 0,
+									borderRadius: 10,
+								}}
+							>
+								<CardItem style={{ padding: 0, margin: 0, height: 80, borderRadius: 10 }}>
+									<View style={styles.challengeContainer}>
+										<Text style={styles.challengeName}> {item.title.toUpperCase()} </Text>
+										<Text
+											style={{
+												fontSize: responsiveFontSize(1.4),
+												color: '#A0A0A0',
+												fontFamily: 'monospace',
+												marginTop: screenHeight * 0.005,
+												marginLeft: screenWidth * 0.03,
 											}}
-										/>
-
-										<Text style={styles.questionTitle}> {item.title} </Text>
+										>
+											Difficulty:
+										</Text>
 									</View>
 								</CardItem>
 							</Card>
@@ -116,26 +155,22 @@ export default class ChallengesScreen extends React.Component {
 const styles = StyleSheet.create({
 	container: {
 		flex: 1,
-		backgroundColor: '#e2e1e0',
+		backgroundColor: '#F5F5F5',
 	},
-	questionContainer: {
-		flex: 1,
-		flexDirection: 'row',
-	},
-	questionpic: {
+
+	challengepic: {
 		flex: 2,
 		height: screenWidth * 0.2,
 		width: screenWidth * 0.15,
 		// borderColor:"black",
 		// borderWidth:2,
 	},
-	questionTitle: {
-		flex: 5,
+	challengeContainer: {
+		flex: 1,
 		flexDirection: 'column',
-		marginLeft: screenWidth * 0.01,
-		color: '#707070',
-		// borderColor:"black",
-		// borderWidth:2,
+	},
+	challengeName: {
+		fontSize: responsiveFontSize(1.8),
 		fontFamily: 'monospace',
 	},
 	spinnerText: {
@@ -147,5 +182,24 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center',
+	},
+	flatList: {
+		padding: 0,
+		margin: 0,
+		marginTop: screenHeight * 0.005,
+		marginHorizontal: screenWidth * 0.01,
+	},
+	pickerStyle: {
+		width: 100,
+		color: '#B0B0B0',
+	},
+	pickerItem: {
+		color: '#B0B0B0',
+		width: screenWidth * 0.2,
+	},
+	pickerForm: {
+		width: screenWidth * 0.4,
+		marginLeft: screenWidth * 0.6,
+		marginBottom: 0,
 	},
 });

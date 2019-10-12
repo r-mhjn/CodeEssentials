@@ -116,28 +116,42 @@ export default class CourseListScreen extends React.Component {
 							</Button>
 						</Left>
 						<Body style={{ flex: 1 }}>
-							<Title style={{ textAlign: 'center', fontFamily: 'monospace' }}>{this.state.domain}</Title>
+							<Title style={{ textAlign: 'center', fontFamily: 'monospace' }}>
+								{this.state.courseId}
+							</Title>
 						</Body>
 						<Right />
 					</Header>
 
-					<Content style={{backgroundColor:"#F8F8F8"}}>
+					<Content style={{ backgroundColor: '#F8F8F8' }}>
 						<View style={styles.container}>
 							<FlatList
 								data={this.state.courses}
 								keyExtractor={this._keyExtractor}
-								style={{ padding: 0, margin: 0 }}
+								style={{
+									padding: 0,
+									margin: 0,
+									marginTop: screenHeight * 0.01,
+									marginHorizontal: screenWidth * 0.01,
+								}}
 								renderItem={({ item }) => (
-									<Card style={{ padding: 0, margin: 0 }}>
+									<Card style={{ padding: 0, margin: 0, borderRadius: 10 }}>
 										<CardItem
 											style={{
 												padding: 0,
 												margin: 0,
 												minHeight: 70,
 												display: 'flex',
+												borderRadius: 10,
 												// flexDirection: 'column',
 											}}
 										>
+											<Image
+												style={styles.image}
+												source={{
+													uri: `http://${ip.default}:5000/coursepics/${item.courseImage}`,
+												}}
+											/>
 											<View style={styles.quizzTopicContainer}>
 												<Text style={styles.topicName}> {item.courseName.toUpperCase()} </Text>
 												<Text
@@ -145,8 +159,8 @@ export default class CourseListScreen extends React.Component {
 														fontSize: responsiveFontSize(1.6),
 														color: '#A0A0A0',
 														fontFamily: 'monospace',
-														marginLeft: screenWidth * 0.05,
-														width:screenWidth*0.75,
+														marginLeft: screenWidth * 0.025,
+														width: screenWidth * 0.63,
 													}}
 												>
 													{item.description}
@@ -160,6 +174,7 @@ export default class CourseListScreen extends React.Component {
 														this.props.navigation.navigate('CourseTopicListScreen', {
 															topics: item.topics,
 															courseName: item.courseName,
+															courseId: item._id,
 														});
 													}}
 													style={{ padding: 0, margin: 0 }}
@@ -168,9 +183,6 @@ export default class CourseListScreen extends React.Component {
 														name="chevron-right"
 														size={30}
 														style={{
-															// position:"relative",
-															// left:screenWidth*0.1,
-															// marginRight: screenWidth * 0.1,
 															color: '#10A881',
 														}}
 													/>
@@ -228,14 +240,6 @@ const styles = StyleSheet.create({
 		fontSize: responsiveFontSize(2.5),
 		fontFamily: 'monospace',
 	},
-	courseDescription: {},
-	dotIcon: {
-		width: 32,
-		height: 45,
-		margin: 7.5,
-		color: '#10A881',
-		// resizeMode: 'contain',
-	},
 	spinnerText: {
 		justifyContent: 'center',
 		alignItems: 'center',
@@ -248,5 +252,12 @@ const styles = StyleSheet.create({
 	quizzTopicContainer: {
 		flex: 1,
 		flexDirection: 'column',
+	},
+	image: {
+		width: screenWidth * 0.12,
+		height: screenWidth * 0.12,
+		marginRight: screenWidth * 0.045,
+		borderRadius: 10,
+		// borderColor: '#fff',
 	},
 });

@@ -18,6 +18,7 @@ import ChallengeCommentScreen from './screens/ChallengeCommentScreen';
 import CourseListScreen from './screens/CourseListScreen';
 import CourseTopicListScreen from './screens/CourseTopicListScreen';
 import QuizzQuestionsScreen from './screens/QuizzQuestionsScreen';
+import MyCoursesListScreen from './screens/MyCoursesListScreen';
 
 const reducer = () => [];
 
@@ -38,10 +39,11 @@ const AppNavigatorStack = createStackNavigator(
 		ChallengeCommentScreen: { screen: ChallengeCommentScreen },
 		CourseListScreen: { screen: CourseListScreen },
 		CourseTopicListScreen: { screen: CourseTopicListScreen },
-		QuizzQuestionsScreen: { screen: QuizzQuestionsScreen },
+		QuizzQuestionsScreen: { screen: QuizzQuestionsScreen },		
+		MyCoursesListScreen: { screen: MyCoursesListScreen },
 	},
 	{
-		headerMode: 'none', 
+		headerMode: 'none',
 		navigationOptions: {
 			headerVisible: false,
 		},
