@@ -256,8 +256,8 @@ const styles = StyleSheet.create({
     marginTop: screenHeight * 0.02
   },
   formContainer: {
-    // borderColor:"blue",
-    // borderWidth:2,
+    // borderColor: "blue",
+    // borderWidth: 2,
     width: screenWidth * 0.9,
     marginHorizontal: screenWidth * 0.03,
     // marginBottom:screenHeight*0.10,
@@ -272,9 +272,10 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    //   borderColor:"black",
-    //   borderWidth:2,
+    // borderColor: "black",
+    // borderWidth: 2,
     height: screenHeight * 0.1,
-    maxHeight: screenHeight * 0.1
+    // maxHeight: screenHeight * 0.1,
+    marginVertical: screenHeight * 0.05
   }
 });

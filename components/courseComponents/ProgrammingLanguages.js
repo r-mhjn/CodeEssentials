@@ -80,7 +80,7 @@ export default class MyCourses extends React.Component {
 							{this.state.courses.map((item, index) => {
 								if (index <= 3) {
 									return (
-										<TouchableOpacity
+										<TouchableWithoutFeedback
 											key={index}
 											onPress={() => {
 												this.props.navigation.navigate('CourseTopicListScreen', {
@@ -100,7 +100,7 @@ export default class MyCourses extends React.Component {
 													{item.courseName.toUpperCase()}
 												</Text>
 											</View>
-										</TouchableOpacity>
+										</TouchableWithoutFeedback>
 									);
 								}
 							})}

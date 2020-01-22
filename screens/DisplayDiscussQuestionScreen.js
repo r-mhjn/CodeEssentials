@@ -40,7 +40,7 @@ import ChallengeCommentScreen from "./ChallengeCommentScreen";
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
-export default class DisplayChallengeScreen extends React.Component {
+export default class DisplayDiscussQuestionScreen extends React.Component {
   constructor(props) {
     super(props);
 
@@ -94,27 +94,37 @@ export default class DisplayChallengeScreen extends React.Component {
                 </Text>
               </View>
             </Content>
-            {
-              // <View style={styles.buttonContainer}>
-              //   <TouchableOpacity
-              //     onPress={() => {
-              //       // this.props.navigation.navigate("ChallengeCommentScreen");
-              //       this._panel.show();
-              //     }}
-              //   >
-              //     <Text
-              //       style={{
-              //         color: "#10A881",
-              //         fontWeight: "300",
-              //         fontFamily: "monospace",
-              //         fontSize: responsiveFontSize(2)
-              //       }}
-              //     >
-              //       COMMENTS
-              //     </Text>
-              //   </TouchableOpacity>
-              // </View>
-            }
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  // this.props.navigation.navigate("ChallengeCommentScreen");
+                  this._panel.show();
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#10A881",
+                    fontWeight: "300",
+                    fontFamily: "monospace",
+                    fontSize: responsiveFontSize(2)
+                  }}
+                >
+                  COMMENTS
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <SlidingUpPanel ref={c => (this._panel = c)}>
+              <View style={styles.container}>
+                <Button
+                  title="Hide"
+                  onPress={() => this._panel.hide()}
+                  style={styles.sliderButton}
+                >
+                  <Icon name="arrow-down"></Icon>
+                </Button>
+                <ChallengeCommentScreen />
+              </View>
+            </SlidingUpPanel>
           </Container>
         </SafeAreaView>
       </TouchableWithoutFeedback>
